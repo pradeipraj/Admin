@@ -10,9 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
-
 @RestController
 @RequestMapping("/api/admins")
 
@@ -36,9 +33,8 @@ public class AdminUserController {
     @PostMapping("/adminLogin")
     public ResponseEntity<?> adminLogin(@RequestBody AdminLoginRequest adminLoginRequest){
         try {
-            String username = adminAuthService.authenticate(adminLoginRequest);
-            Optional<?> user_created =Optional.ofNullable(username);
-            return ResponseEntity.of(user_created);
+            adminAuthService.authenticate(adminLoginRequest);
+            return ResponseEntity.ok("Admin login successful");
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
         }
