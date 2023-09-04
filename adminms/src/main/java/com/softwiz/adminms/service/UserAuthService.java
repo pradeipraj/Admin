@@ -11,7 +11,6 @@ public class UserAuthService {
     @Autowired
     UserRepository userRepository;
     public String authenticate(UserLoginRequest userLoginRequest) {
-
         User user = userRepository.findByEmail(userLoginRequest.getEmail());
         return user.getUsername();
 
