@@ -6,6 +6,7 @@ import com.softwiz.adminms.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 @Service
@@ -31,10 +32,6 @@ public class UserService {
         if (userRepository.findByUsername(userRegReq.getUsername()) != null){
             throw new IllegalArgumentException("Username already in use");
         }
-        //Checks the length of the password, and if it is less than eight characters, it throws an exception message
-        if (userRegReq.getPassword().length() < 8){
-            throw new IllegalArgumentException("Password must be minimum 8 character");
-        }
         //Create a user Entry
         User user = new User();
         user.setUsername(userRegReq.getUsername());
@@ -42,5 +39,13 @@ public class UserService {
         user.setEmail(userRegReq.getEmail());
         user.setIsEnable(userRegReq.getIsEnable());
         userRepository.save(user);
+    }
+
+    public Optional<User> getUserById(Long userId) {
+        return userRepository.findById(userId);
+    }
+
+    public void deleteUser(Long userId) {
+        userRepository.deleteById(userId);
     }
 }

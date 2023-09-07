@@ -2,6 +2,7 @@ package com.softwiz.adminms.controller;
 
 import com.softwiz.adminms.dto.UserLoginRequest;
 import com.softwiz.adminms.dto.UserRegReq;
+import com.softwiz.adminms.entity.User;
 import com.softwiz.adminms.service.UserAuthService;
 import com.softwiz.adminms.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,6 @@ public class UserController {
     }
     //Register the user and try and catch it to handle exceptions
     @PostMapping("/userRegister")
-
     //Requesting user to register by Request body and returned will Response entity
     public ResponseEntity<?> userRegister(@RequestBody UserRegReq userRegReq){
             userService.registerUser(userRegReq);
@@ -41,4 +41,20 @@ public class UserController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
         }
     }
+
+    @DeleteMapping("/deleteUser/{userId}")
+    public ResponseEntity<?> deleteUserById(@PathVariable Long userId){
+        try {
+            Optional<User> user = userService.getUserById(userId);
+            if (user.isPresent()){
+                userService.deleteUser(userId);
+                return new ResponseEntity<>("User deleted successfully", HttpStatus.OK);
+            }else {
+                return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+            }
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

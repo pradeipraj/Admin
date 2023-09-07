@@ -33,4 +33,8 @@ public class User {
     //Create a columns and name it isEnable
     @Column(name = "isEnable")
     private Boolean isEnable;
+
+    @ManyToOne
+    @JoinColumn(name = "adminId")
+    private AdminUser createdByAdmin;
 }

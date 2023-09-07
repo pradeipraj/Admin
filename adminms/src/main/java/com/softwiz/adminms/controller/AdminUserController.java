@@ -2,7 +2,10 @@ package com.softwiz.adminms.controller;
 
 import com.softwiz.adminms.dto.AdminLoginRequest;
 import com.softwiz.adminms.dto.AdminUserRegReq;
+import com.softwiz.adminms.dto.UserRegReq;
+import com.softwiz.adminms.entity.AdminUser;
 import com.softwiz.adminms.entity.User;
+import com.softwiz.adminms.repository.AdminUserRepository;
 import com.softwiz.adminms.service.AdminAuthService;
 import com.softwiz.adminms.service.AdminUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +17,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/admins")
 
 public class AdminUserController {
-    private final AdminUserService adminUserService;
-    private final AdminAuthService adminAuthService;
     @Autowired
-    public AdminUserController(AdminUserService adminUserService, AdminAuthService adminAuthService){
-        this.adminUserService = adminUserService;
-        this.adminAuthService = adminAuthService;
-    }
+    private AdminUserService adminUserService;
+    @Autowired
+    private AdminAuthService adminAuthService;
+    @Autowired
+    private AdminUserRepository adminUserRepository;
+
     @PostMapping("/adminRegister")
     public ResponseEntity<?> adminRegister(@RequestBody AdminUserRegReq adminUserRegReq){
         try {
@@ -39,12 +42,12 @@ public class AdminUserController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
         }
     }
-
     //Creating user by Admin
     @PostMapping("/admin/createUser")
-    public ResponseEntity<String> createUser(@RequestBody User user) {
+    public ResponseEntity<String> createUser(@RequestBody User user, Long adminId) {
         try {
-            adminUserService.createUser(user);
+            adminUserService.createUser(user, adminId);
+            user.setCreatedByAdmin(new AdminUser());
             return ResponseEntity.ok("User Created Successfully");
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

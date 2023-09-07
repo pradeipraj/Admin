@@ -8,8 +8,6 @@ import com.softwiz.adminms.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class AdminUserService {
 
@@ -47,7 +45,7 @@ public class AdminUserService {
 
     }
     //Validate before Creating user by admin
-    public User createUser(User user) {
+    public User createUser(User user, Long adminId) {
         // Validate the input user object
         if (user == null) {
             throw new IllegalArgumentException("User cannot be null");
