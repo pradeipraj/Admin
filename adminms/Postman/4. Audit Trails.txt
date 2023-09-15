@@ -1,0 +1,4 @@
+4. Audit Trails
+
+GetAllAuditLogsByAdmin:
+GET: http://localhost:8080/api/admin/audit-logs/1
