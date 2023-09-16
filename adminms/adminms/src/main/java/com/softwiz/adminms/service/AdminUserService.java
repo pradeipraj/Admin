@@ -110,6 +110,7 @@ public class AdminUserService {
         if (user.isEmpty()) {
             throw new EntityNotFoundException("User not found with ID: " + userId);
         }
+        userRepository.delete(user.get());
     }
 
     public AdminUser findAdminById(Long adminId) {
