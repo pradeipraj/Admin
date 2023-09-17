@@ -1,0 +1,19 @@
+3. Loan Management
+
+GetOngoingLoansByAdmin:
+GET: http://localhost:8080/api/admin/loans/ongoing/1
+
+GetPastLoansByAdmin:
+GET: http://localhost:8080/api/admin/loans/completed/1
+
+GetAllLoansByAdmin:
+GET: http://localhost:8080/api/admin/loans/allLoans/1
+
+GetCancelledLoansByAdmin:
+GET: http://localhost:8080/api/admin/loans/cancelledLoans/1
+
+GetLateFeeLoansByAdmin:
+GET: http://localhost:8080/api/admin/loans/late-fee/1
+
+UpdateLoanStatusByAdmin:
+PUT: http://localhost:8080/api/admin/loans/1/2/update-status/CANCELLED or ONGOING or COMPLETED
